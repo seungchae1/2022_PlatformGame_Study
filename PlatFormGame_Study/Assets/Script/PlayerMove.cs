@@ -6,20 +6,26 @@ public class PlayerMove : MonoBehaviour
 {
     public float maxSpeed;
     Rigidbody2D rb;
-    // Start is called before the first frame update
+    SpriteRenderer spriteRenderer;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     void Update()
     {
+        //Stop Speed
         if (Input.GetButtonUp("Horizontal"))
-            //normalized == 방향
-            rb.velocity = new Vector2(rb.velocity.normalized.x * 0.5f, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.normalized.x * 0.5f, rb.velocity.y); //normalized == 방향
+        //Direction Sprite
+        if (Input.GetButton("Horizontal"))
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
     }
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         //Move by Key Control
@@ -29,7 +35,7 @@ public class PlayerMove : MonoBehaviour
         //velocity == Rigidbody의 현재 속도, Vector
         if (rb.velocity.x > maxSpeed)   //Right Max Speed
             rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
-        if (rb.velocity.x < maxSpeed * (-1))   //Left Max Speed
+        else if (rb.velocity.x < maxSpeed * (-1))   //Left Max Speed
             rb.velocity = new Vector2(maxSpeed * (-1), rb.velocity.y);
     }
 }
