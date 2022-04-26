@@ -7,13 +7,20 @@ public class PlayerMove : MonoBehaviour
     public float maxSpeed;
     Rigidbody2D rb;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        if (Input.GetButtonUp("Horizontal"))
+            //normalized == 방향
+            rb.velocity = new Vector2(rb.velocity.normalized.x * 0.5f, rb.velocity.y);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
         //Move by Key Control
         float h = Input.GetAxisRaw("Horizontal");
