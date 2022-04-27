@@ -22,7 +22,10 @@ public class PlayerMove : MonoBehaviour
     {
         //Jump
         if (Input.GetButtonDown("Jump"))
+        {
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
+        }
 
         //Stop Speed
         if (Input.GetButtonUp("Horizontal"))
